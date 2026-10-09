@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCA Student Data Project</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f4ff;
+      color: #172554;
+    }
+    header {
+      background: linear-gradient(120deg, #4338ca, #0891b2);
+      color: white;
+      text-align: center;
+      padding: 45px 15px;
+    }
+    main {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 18px #00000010;
+    }
+    button {
+      background: #4338ca;
+      color: white;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccd5e5;
+      border-radius: 8px;
+    }
+    #result { font-weight: bold; color: #047857; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Principal Component Analysis</h1>
+    <p>Student Data Project | B.Tech Mathematics | B5</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Welcome to PCA Student Analytics</h2>
+      <p>
+        This project demonstrates how Principal Component Analysis
+        reduces student marks across five subjects into fewer dimensions.
+      </p>
+      <p><b>Dataset:</b> 30 students and 5 subjects</p>
+    </section>
+
+    <section class="card">
+      <h2>Test the Mathematics</h2>
+      <p>Enter five subject marks to calculate the average.</p>
+
+      <label>Mathematics</label>
+      <input id="m1" type="number" min="0" max="100" value="88">
+
+      <label>Physics</label>
+      <input id="m2" type="number" min="0" max="100" value="84">
+
+      <label>Chemistry</label>
+      <input id="m3" type="number" min="0" max="100" value="86">
+
+      <label>Programming</label>
+      <input id="m4" type="number" min="0" max="100" value="91">
+
+      <label>English</label>
+      <input id="m5" type="number" min="0" max="100" value="82">
+
+      <button onclick="calculate()">Calculate Average</button>
+      <p id="result">Your result will appear here.</p>
+    </section>
+
+    <section class="card">
+      <h2>Mathematical Model</h2>
+      <p>Centered data: Xc = X − μ</p>
+      <p>Covariance: C = XcᵀXc / (n − 1)</p>
+      <p>Eigenvalue equation: Cv = λv</p>
+      <p>Projection: Z = XcW</p>
+      <p>
+        PCA selects the eigenvectors corresponding to the largest
+        eigenvalues to represent the data in fewer dimensions.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    function calculate() {
+      const ids = ["m1", "m2", "m3", "m4", "m5"];
+      const values = ids.map(id => {
+        const el = document.getElementById(id);
+        return el.value === "" ? NaN : Number(el.value);
+      });
+
+      if (values.some(v => !Number.isFinite(v) || v < 0 || v > 100)) {
+        document.getElementById("result").textContent =
+          "Please enter valid marks from 0 to 100.";
+        return;
+      }
+
+      const average = values.reduce((a, b) => a + b, 0) / values.length;
+      document.getElementById("result").textContent =
+        "Average marks: " + average.toFixed(2) + " / 100";
+    }
+  </script>
+</body>
+</html>
